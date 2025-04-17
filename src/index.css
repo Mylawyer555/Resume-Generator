@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+
+body,html,#root{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    width: 100vw;
+    min-height: 100vh; /* Use min-height instead of height */
+}
+.input {
+    @apply border p-2 rounded w-full;
+}
+
+.btn-primary {
+    @apply bg-blue-600 text-white px-4 py-2 rounded;
+}
+
+.btn-secondary {
+    @apply bg-gray-300 text-black px-4 py-2 rounded;
+}
+  
