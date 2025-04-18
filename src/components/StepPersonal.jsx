@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-const StepPersonal = () => {
+const StepPersonal = ({formData, updateFormData}) => {
   const { register, handleSubmit } = useForm()
+  const [localData, setLocalData] = useState(formData.personal || {});
+
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    const updated = {...localData, [name]: value};
+    setLocalData(updated);
+    updateFormData("personal",updated);
+
+  }
 
   return (
     <div className='w-full px-4 md:px-8'>
@@ -15,7 +24,7 @@ const StepPersonal = () => {
             <div className="firstname w-full md:w-1/2">
               <label className='text-[12px] text-black'>FIRST NAME</label>
               <input
-                type="text"
+                {...register("firstname", {required:true, minLength:2})}
                 placeholder='Amina '
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none  
                 focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'

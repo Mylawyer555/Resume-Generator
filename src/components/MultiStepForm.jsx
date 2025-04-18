@@ -18,14 +18,26 @@ const steps = [
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    
-  })
-
-
-
-
+    personal: {},
+    experience: [],
+    education: [],
+    skills: [],
+    summary: "",
+  });
 
   const Step = steps[currentStep];
+  const updateFormData = (section, data) => {
+    setFormData((prev) => ({
+      ...prev,
+      [section]: data,
+    }));
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem("resumeData", JSON.stringify(formData));
+    alert("Resume data saved!");
+  };
+
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -41,7 +53,8 @@ const MultiStepForm = () => {
         </div>
       </div>
 
-      <Step />
+      <Step formData={formData} updateFormData={updateFormData} />
+
 
       <div className="flex justify-between mt-6">
         {currentStep > 0 && (
@@ -52,13 +65,20 @@ const MultiStepForm = () => {
             Back
           </button>
         )}
-        {currentStep < steps.length - 1 && (
+        {currentStep < steps.length - 1 ? (
           <button
             onClick={() => setCurrentStep((prev) => prev + 1)}
             className="btn-primary"
           >
             Next
           </button>
+        ) : (
+            <button 
+            onClick={handleSubmit}
+            className="btn-primary"
+            >
+                Submit
+            </button>
         )}
       </div>
     </div>
