@@ -1,72 +1,103 @@
 import React from "react";
-import Navbar from "../components/Navbar"; // Import Navbar
-import {useNavigate} from 'react-router-dom'
+import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import { FileText, FileCheck, BadgeCheck } from "lucide-react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
-  const handleTemplateNavigation =()=>{
-    navigate('/templates')
-  }
+  const handleBuildCV = () => navigate("/builder");
+  const handleExploreTemplates = () => navigate("/templates");
 
   return (
     <div className="bg-white font-sans text-gray-800">
-      {/* Navbar */}
       <Navbar />
- {/* Hero Section */}
- <section className="flex flex-col-reverse md:flex-row items-center p-8 md:p-16 bg-gray-100">
+
+      {/* Hero Section */}
+      <section className="flex flex-col-reverse md:flex-row items-center px-6 md:px-16 py-12 bg-gray-50">
         <div className="md:w-1/2 text-center md:text-left">
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            Boost Your Chances of Landing Your Dream Job
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+            Create a Resume That Gets You Hired
           </h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Your CV is more than just a document. It's your pathway to a career <br />
-            you have long dreamed of. <br /> Build your CV with our Expertise.
+          <p className="text-lg text-gray-600 mb-8">
+            Our resume builder helps you stand out with ATS-optimized templates,
+            industry-proven layouts, and real-time preview. Take the next step
+            in your career—fast and professionally.
           </p>
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-            <a onClick={handleTemplateNavigation} href="cvgeneratorForm.html" className="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition text-center">Build your CV</a>
-            <a href="cvgeneratorForm.html" className="border-2 border-yellow-500 text-yellow-500 px-8 py-3 rounded-lg hover:bg-yellow-500 hover:text-white transition text-center">Explore Templates</a>
+          <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+            <button
+              onClick={handleBuildCV}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-medium transition"
+            >
+              Build My Resume
+            </button>
+            <button
+              onClick={handleExploreTemplates}
+              className="border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white px-8 py-3 rounded-lg font-medium transition"
+            >
+              Explore Templates
+            </button>
           </div>
         </div>
-        <div className="md:w-1/2 flex justify-center">
-          <img src="/images/CV-Maker-removebg-preview.png" alt="CV Maker" className="w-3/4 md:w-full h-auto object-cover" />
+        <div className="md:w-1/2 flex justify-center mb-8 md:mb-0">
+          <img
+            src="/images/CV-Maker-removebg-preview.png"
+            alt="Resume Builder Preview"
+            className="w-4/5 md:w-full h-auto object-contain"
+          />
         </div>
       </section>
 
-      {/* Trusted Companies Section */}
-      <section className="text-center py-12 bg-gray-200">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-6">Trusted by Great Companies</h3>
-        <img src="/images/Screenshot_2024-05-27_003117-removebg-preview.png" alt="Trusted Companies" className="mx-auto w-3/4 md:w-1/2" />
+      {/* Trusted Companies */}
+      <section className="bg-white py-10 text-center border-t border-gray-100">
+        <h3 className="text-xl md:text-2xl font-semibold text-gray-700 mb-4">
+          Trusted by Professionals From
+        </h3>
+        <img
+          src="/images/Screenshot_2024-05-27_003117-removebg-preview.png"
+          alt="Company Logos"
+          className="mx-auto w-3/4 md:w-1/2 opacity-90"
+        />
       </section>
 
-      {/* How-to Section */}
-      <section className="flex flex-col md:flex-row items-center justify-between p-8 md:p-16 bg-white">
-        <div className="md:w-1/2 mb-8 md:mb-0">
-          <h2 className="text-3xl font-semibold text-gray-900 mb-4">
-            First Impression <br /> matters. RevampCv <br /> make it count!
+      {/* Features Section */}
+      <section className="bg-gray-50 py-16 px-6 md:px-16 flex flex-col md:flex-row items-center justify-between">
+        <div className="md:w-1/2 mb-12 md:mb-0">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            First Impressions Matter. Make Yours Count.
           </h2>
           <p className="text-lg text-gray-600 mb-6">
-            Showcase your skills while instilling confidence in employers. Packed with proven templates, tips, and tools.
-            <br />
-            Our custom resume builder propels your career forward.
+            Impress recruiters with a modern, structured resume tailored to
+            today's hiring standards. Our tool empowers you to create a
+            professional resume with ease.
           </p>
-          <ul className="space-y-3 text-gray-700 mb-6">
-            <li className="flex items-center">
-              <i className="bi bi-file-text mr-2 text-yellow-500"></i> Easy-to-use resume builder
+          <ul className="space-y-4 text-gray-700 mb-8">
+            <li className="flex items-center gap-3">
+              <FileText className="text-yellow-500 w-5 h-5" />
+              Intuitive, step-by-step resume builder
             </li>
-            <li className="flex items-center">
-              <i className="bi bi-file-earmark-easel mr-2 text-yellow-500"></i> ATS optimized resume
+            <li className="flex items-center gap-3">
+              <FileCheck className="text-yellow-500 w-5 h-5" />
+              Optimized for Applicant Tracking Systems (ATS)
             </li>
-            <li className="flex items-center">
-              <i className="bi bi-patch-check mr-2 text-yellow-500"></i> Verified by certified resume writers
+            <li className="flex items-center gap-3">
+              <BadgeCheck className="text-yellow-500 w-5 h-5" />
+              Reviewed by certified resume experts
             </li>
           </ul>
-          <a href="#" className="inline-block bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition">
-            Build your resume
-          </a>
+          <button
+            onClick={handleBuildCV}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-medium transition"
+          >
+            Get Started Now
+          </button>
         </div>
         <div className="md:w-1/2 flex justify-center">
-          <img src="/images/leftphoto.png" alt="How to use RevampCv" className="w-3/4 md:w-full h-auto object-cover" />
+          <img
+            src="/images/leftphoto.png"
+            alt="Resume Features"
+            className="w-4/5 md:w-full h-auto object-contain"
+          />
         </div>
       </section>
     </div>

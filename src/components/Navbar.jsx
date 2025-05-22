@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi"; // Icons for mobile menu
 
 const Navbar = () => {
@@ -26,8 +26,11 @@ const Navbar = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex space-x-4">
-          <button className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">Sign Up</button>
-          <button className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">Log In</button>
+          <Link to={'/signup'}
+           className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">Sign Up</Link>
+          <Link 
+          to={'/login'}
+          className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">Log In</Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -52,12 +55,16 @@ const Navbar = () => {
                 {item}
               </NavLink>
             ))}
-            <button className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">
+            <Link 
+            to={"/signup"}
+            className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">
               Sign Up
-            </button>
-            <button className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">
+            </Link>
+            <Link 
+            to={"/login"}
+            className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">
               Log In
-            </button>
+            </Link>
           </div>
         </div>
       )}
