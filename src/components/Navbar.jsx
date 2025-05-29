@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { FiMenu, FiX } from "react-icons/fi"; // Icons for mobile menu
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Cover Letter", path: "/cover-letter" },
+    { name: "FAQ", path: "/faq" }
+  ];
 
   return (
     <nav className="bg-gray-900 text-white">
@@ -11,29 +25,51 @@ const Navbar = () => {
         {/* Logo */}
         <div className="text-2xl font-bold">iCRAFT</div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
-          {["Home", "Cover Letter", "FAQ"].map((item, index) => (
-            <NavLink 
-              key={index} 
-              to={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`} 
-              className={({ isActive }) => `hover:text-yellow-400 transition ${isActive ? "text-yellow-400 font-semibold" : ""}`}
+          {navLinks.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              className={({ isActive }) =>
+                `hover:text-yellow-400 transition ${
+                  isActive ? "text-yellow-400 font-semibold" : ""
+                }`
+              }
             >
-              {item}
+              {item.name}
             </NavLink>
           ))}
         </div>
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex space-x-4">
-          <Link to={'/signup'}
-           className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">Sign Up</Link>
-          <Link 
-          to={'/login'}
-          className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">Log In</Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/signup"
+                className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition"
+              >
+                Sign Up
+              </Link>
+              <Link
+                to="/login"
+                className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition"
+              >
+                Log In
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle Button */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
             {isOpen ? <FiX /> : <FiMenu />}
@@ -45,26 +81,45 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-gray-800 text-white py-4">
           <div className="flex flex-col space-y-4 text-center">
-            {["Home", "Cover Letter", "FAQ"].map((item, index) => (
-              <NavLink 
-                key={index} 
-                to={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`} 
+            {navLinks.map((item, index) => (
+              <NavLink
+                key={index}
+                to={item.path}
                 className="hover:text-yellow-400 transition"
                 onClick={() => setIsOpen(false)}
               >
-                {item}
+                {item.name}
               </NavLink>
             ))}
-            <Link 
-            to={"/signup"}
-            className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition">
-              Sign Up
-            </Link>
-            <Link 
-            to={"/login"}
-            className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition">
-              Log In
-            </Link>
+
+            {user ? (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/signup"
+                  className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  to="/login"
+                  className="border-2 border-yellow-500 text-yellow-500 px-6 py-2 rounded-lg hover:bg-yellow-500 hover:text-white transition"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Log In
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

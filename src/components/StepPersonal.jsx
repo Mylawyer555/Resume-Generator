@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useResume } from '../context/ResumeContext'
 
-const StepPersonal = ({formData, updateFormData}) => {
-  const { register, handleSubmit } = useForm()
-  const [localData, setLocalData] = useState(formData.personal || {});
+const StepPersonal = () => {
+  const { register, handleSubmit, watch, reset } = useForm()
+  const {formData, setFormData } = useResume();
 
-  const handleChange = (e) =>{
-    const {name, value} = e.target;
-    const updated = {...localData, [name]: value};
-    setLocalData(updated);
-    updateFormData("personal",updated);
 
-  }
+  
 
   return (
     <div className='w-full px-4 md:px-8'>

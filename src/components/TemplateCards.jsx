@@ -7,7 +7,7 @@ const TemplateCard = ({ template, onSelect }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all cursor-pointer relative group"
+      className="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transition-all cursor-pointer relative group "
     >
       <img
         src={template.image}
@@ -25,12 +25,13 @@ const TemplateCard = ({ template, onSelect }) => {
         whileInView={{ y: 0, opacity: 1 }}
         whileHover={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition 
-                   absolute bottom-6 left-1/2 transform -translate-x-1/2 
-                   opacity-100 md:opacity-0 md:group-hover:opacity-100"
+        className="bg-yellow-500 text-white w-[200px] h-[50px] rounded-lg hover:bg-yellow-600 transition 
+                   bottom-50 left-1/2 transform -translate-x-1/2 
+                   opacity-100 md:opacity-0 md:group-hover:opacity-100 absolute"
       >
         Select Template
       </motion.button>
+      
     </motion.div>
   );
 };

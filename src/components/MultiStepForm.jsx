@@ -5,6 +5,7 @@ import StepPersonal from "./StepPersonal";
 import StepReview from "./StepReview";
 import StepSkills from "./StepSkills";
 import StepSummary from "./StepSummary";
+import { useResume } from "../context/ResumeContext";
 
 const steps = [
   StepPersonal,
@@ -17,13 +18,8 @@ const steps = [
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    personal: {},
-    experience: [],
-    education: [],
-    skills: [],
-    summary: "",
-  });
+  const {formData, setFormData} = useResume();
+  
 
   const Step = steps[currentStep];
   const updateFormData = (section, data) => {

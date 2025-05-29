@@ -1,10 +1,16 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useResume } from "../context/ResumeContext"; 
+import { useEffect } from "react";
 
 const StepEducation = () => {
-  const { register, control } = useForm({
+  const {formData, setFormData} = useResume();
+
+  const { register, control, handleSubmit, reset, watch} = useForm({
     defaultValues: {
-      education: [
+      education: formData.education.length > 0
+        ? formData.education 
+        : [
         {
           schoolName: "",
           schoolLocation: "",
@@ -17,6 +23,14 @@ const StepEducation = () => {
       ],
     },
   });
+
+  useEffect(() => {
+    const watchedEducation = watch("education");
+
+    setFormData((prev) => ({...prev, education: watchedEducation }));
+  }, [watchedEducation, setFormData]);
+
+
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -50,7 +64,7 @@ const StepEducation = () => {
         Tell us about any colleges, vocational programs, or training courses you took.
       </p>
 
-      <form className="form-wrapper w-full mt-7 p-4 rounded-md space-y-8">
+      <form className="form-wrapper w-full mt-7 p-4 rounded-md space-y-8" >
         {fields.map((field, index) => (
           <div
             key={field.id}
