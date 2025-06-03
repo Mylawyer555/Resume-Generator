@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const StepExperience = ({updateFormData, formData}) => {
   const { register, control, watch } = useForm({
     defaultValues: {
-      experiences: FormData || [
+      experiences: formData || [
         {
           jobTitle: "",
           responsibilites: "",

@@ -4,27 +4,48 @@ import { toast } from "react-toastify";
 
 const ResumeContext = createContext();
 
+const initialFormData = {
+  selectedTemplate: "classic", // Default template
+  personal: {
+    firstname: "",
+    lastname: "",
+    email: "",
+    phoneNumber: "",
+    district: "",
+    postalCode: "",
+    country: "",
+  },
+  summary: "",
+  experience: [
+    {
+      jobTitle: "",
+      employer: "",
+      city: "",
+      country: "",
+      startDate: "",
+      endDate: "",
+      responsibilities: "", // Ensure this is initialized
+    },
+  ],
+  education: [
+    {
+      schoolName: "",
+      schoolLocation: "",
+      degree: "",
+      fieldOfStudy: "",
+      graduationMonth: "",
+      graduationYear: "",
+      stillEnrolled: false,
+    },
+  ],
+  skills: [], // Initialize as an empty array
+  
+};
+
 export const ResumeProvider = ({ children }) => {
   // set the state of the form data
-  const [formData, setFormData] = useState(() => {
-    try {
-      const savedData = localStorage.getItem("resumeData");
-      return savedData
-        ? JSON.parse(savedData)
-        : {
-            personal: {},
-            education: [],
-            experience: [],
-            skills: [],
-            summary: "",
-            selectedTemplate: null,
-          };
-    } catch (error) {
-        toast.error("Failed to parse resume from Local storage", error);
-        return {};
-
-    }
-  });
+  const [formData, setFormData] = useState(initialFormData)
+    
 
   //auto save on every change
   useEffect(() => {
