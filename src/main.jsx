@@ -13,6 +13,8 @@ import Faq from "./pages/Faq";
 import { AuthProvider } from "./context/AuthContext";
 import { ResumeProvider } from "./context/ResumeContext";
 import { ToastContainer } from "react-toastify";
+import ClassicTemplate from "./components/tem/classic";
+import ModernTemplate from "./components/tem/Modern";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
     path: "/templates",
     element: <TemplatesPage />,
   },
+  
   {
     path: "/build",
     element: <ResumePage />,
@@ -43,6 +46,14 @@ const router = createBrowserRouter([
     path: "/faq",
     element: <Faq />,
   },
+  {
+    path: "/classic",
+    element: <ClassicTemplate />,
+  },
+  {
+    path: "/modern",
+    element: <ModernTemplate />,
+  }
 ]);
 
 const root = createRoot(document.getElementById("root"));

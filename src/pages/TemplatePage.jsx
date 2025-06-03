@@ -2,6 +2,7 @@ import React from "react";
 import TemplateCard from "../components/TemplateCards";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useResume } from "../context/ResumeContext";
 
 
 const templates = [
@@ -32,6 +33,16 @@ const templates = [
 ];
 
 const TemplatePage = ({ onSelectTemplate }) => {
+
+  const {setFormData} = useResume();
+
+  const handleTemplateSelect = (template) => {
+     setFormData((prev) => ({
+      ...prev,
+      selectedTemplate: template,
+    }));
+    onSelectTemplate(template); // Navigate to form
+  }
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -45,7 +56,7 @@ const TemplatePage = ({ onSelectTemplate }) => {
             <TemplateCard
               key={template.id}
               template={template}
-              onSelect={onSelectTemplate}
+              onSelect={handleTemplateSelect(template)}
               fullHover
             />
           ))}

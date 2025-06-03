@@ -3,32 +3,29 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useResume } from "../context/ResumeContext"; 
 import { useEffect } from "react";
 
-const StepEducation = () => {
-  const {formData, setFormData} = useResume();
+const StepEducation = ({updateFormData, formData}) => {
 
   const { register, control, handleSubmit, reset, watch} = useForm({
     defaultValues: {
-      education: formData.education.length > 0
-        ? formData.education 
-        : [
-        {
-          schoolName: "",
-          schoolLocation: "",
-          degree: "",
-          fieldOfStudy: "",
-          graduationMonth: "",
-          graduationYear: "",
-          stillEnrolled: false,
-        },
-      ],
+      // initializing watched education data
+      
+     education: formData.education || [{
+        schoolName: '',
+        schoolLocation: '',
+        degree: '',
+        fieldOfStudy: '',
+        graduationMonth: '',
+        graduationYear: '',
+        stillEnrolled: false,
+      }],
     },
   });
 
-  useEffect(() => {
-    const watchedEducation = watch("education");
+     const watchedEducation = watch("education");
 
-    setFormData((prev) => ({...prev, education: watchedEducation }));
-  }, [watchedEducation, setFormData]);
+  useEffect(() => {
+   updateFormData("education", watchedEducation);
+  }, [watchedEducation, updateFormData]);
 
 
 
@@ -79,7 +76,7 @@ const StepEducation = () => {
                   placeholder="e.g Bell University"
                   {...register(`education.${index}.schoolName`)}
                   className="w-full border border-gray-300 bg-gray-50 px-3 py-3 rounded-md outline-none  
-                  focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
+                  focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
                 />
               </div>
               <div className="w-full md:w-1/2">
@@ -89,7 +86,7 @@ const StepEducation = () => {
                   placeholder="e.g Lagos, Nigeria"
                   {...register(`education.${index}.schoolLocation`)}
                   className="w-full border border-gray-300 bg-gray-50 px-3 py-3 rounded-md outline-none  
-                  focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
+                  focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
                 />
               </div>
             </div>
@@ -102,7 +99,7 @@ const StepEducation = () => {
                   <select
                     {...register(`education.${index}.degree`)}
                     className="appearance-none w-full border border-gray-300 bg-gray-50 px-3 py-3 pr-10 rounded-md outline-none  
-                    focus:border-b-4 border-b-sky-600 transition-all duration-300 text-sm md:text-base"
+                    focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 text-sm md:text-base"
                   >
                     <option>Select Degree</option>
                     {degreeOptions.map((degree, idx) => (
@@ -127,7 +124,7 @@ const StepEducation = () => {
                   placeholder="e.g Computer Science"
                   {...register(`education.${index}.fieldOfStudy`)}
                   className="w-full border border-gray-300 bg-gray-50 px-3 py-3 rounded-md outline-none  
-                  focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
+                  focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 placeholder:text-gray-300 text-sm md:text-base"
                 />
               </div>
 
@@ -137,7 +134,7 @@ const StepEducation = () => {
                   <select
                     {...register(`education.${index}.graduationMonth`)}
                     className="appearance-none w-full border border-gray-300 bg-gray-50 px-3 py-3 pr-10 rounded-md outline-none  
-                    focus:border-b-4 border-b-sky-600 transition-all duration-300 text-sm md:text-base"
+                    focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 text-sm md:text-base"
                   >
                     <option value="">Month</option>
                     {months.map((month, idx) => (
@@ -153,7 +150,7 @@ const StepEducation = () => {
                   <select
                     {...register(`education.${index}.graduationYear`)}
                     className="appearance-none w-full border border-gray-300 bg-gray-50 px-3 py-3 pr-10 rounded-md outline-none  
-                    focus:border-b-4 border-b-sky-600 transition-all duration-300 text-sm md:text-base"
+                    focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 text-sm md:text-base"
                   >
                     <option value="">Year</option>
                     {years.map((year, idx) => (

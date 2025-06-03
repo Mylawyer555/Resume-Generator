@@ -6,7 +6,17 @@ const StepPersonal = () => {
   const { register, handleSubmit, watch, reset } = useForm()
   const {formData, setFormData } = useResume();
 
-
+  const {} = useForm({
+    defaultValues:{
+      firstname: "",
+      lastname: "",
+      district:"",
+      postalCode:  "",
+      country: "",
+      phoneNumber: "",
+      email: ""
+    }
+  })
   
 
   return (
@@ -15,7 +25,7 @@ const StepPersonal = () => {
       <p className='text-sm md:text-base'>Include your full name and multiple ways for employers to reach you.</p>
 
       <div className='form-wrapper w-full mt-7 p-4 rounded-md'>
-        <form action="" >
+        <form action="" onSubmit={handleSubmit} >
           <div className="fullname w-full flex flex-col md:flex-row gap-4">
             <div className="firstname w-full md:w-1/2">
               <label className='text-[12px] text-black'>FIRST NAME</label>
@@ -23,7 +33,7 @@ const StepPersonal = () => {
                 {...register("firstname", {required:true, minLength:2})}
                 placeholder='Amina '
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none  
-                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                focus:border-b-4 border-b-sky-600 focus:shadow-lg shadow-sky-100 transition-all duration-300 placeholder:text-gray-300 '
               />
             </div>
             <div className="lastname w-full md:w-1/2">
@@ -32,7 +42,7 @@ const StepPersonal = () => {
                 type="text"
                 placeholder='Binu'
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
               />
             </div>
           </div>
@@ -43,7 +53,7 @@ const StepPersonal = () => {
                 type="text"
                 placeholder='Port harcourt'
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
                 />
             </div>
             <div className="Postal Code">
@@ -52,7 +62,7 @@ const StepPersonal = () => {
                 type="text"
                 placeholder='100271'
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
                 />
             </div>
             <div className="country">
@@ -61,7 +71,7 @@ const StepPersonal = () => {
                 type="text"
                 placeholder='Nigeria'
                 className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
                 />
             </div>
           </div>
@@ -72,7 +82,7 @@ const StepPersonal = () => {
                     type="text"
                     placeholder='+2345678903456'
                     className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                    focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                    focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
                     />
                 </div>
                 <div className="EMAIL">
@@ -81,7 +91,7 @@ const StepPersonal = () => {
                     type="text"
                     placeholder='zoe@gmail.com'
                     className='w-full border border-gray-300 bg-gray-50 px-[10px] py-[8px] rounded-[4px] outline-none 
-                    focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 hover:shadow-sm shadow-stone-500'
+                    focus:border-b-4 border-b-sky-600 transition-all duration-300 placeholder:text-gray-300 focus:shadow-lg shadow-sky-100'
                     />
                 </div>
           </div>

@@ -38,7 +38,10 @@ const CoverLetterEditor = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem("cover-letter", JSON.stringify(form));
+    const timeout = setTimeout(() => {
+      localStorage.setItem("cover-letter", JSON.stringify(form));
+    }, 500); // debounce save
+    return () => clearTimeout(timeout);
   }, [form]);
 
   const handleChange = (e) => {
@@ -46,21 +49,31 @@ const CoverLetterEditor = () => {
   };
 
   const handleTemplateSelect = (templateBody) => {
-    setForm((prev) => ({ ...prev, body: templateBody }));
+    const replaced = templateBody
+      .replace(/\[Position\]/g, form.position || "the role")
+      .replace(/\[Company\]/g, form.recipientCompany || "your company")
+      .replace(/\[Hiring Manager\]/g, form.recipientName || "Hiring Manager");
+
+    setForm((prev) => ({ ...prev, body: replaced }));
   };
 
   const handleDownloadPDF = () => {
-    const content = document.getElementById("preview-content");
-    if (content) {
-      html2pdf()
-        .from(content)
-        .set({
-          margin: 0.5,
-          filename: "cover_letter.pdf",
-          html2canvas: { scale: 2 },
-          jsPDF: { format: "a4", orientation: "portrait" },
-        })
-        .save();
+    try {
+      const content = document.getElementById("preview-content");
+      if (content) {
+        html2pdf()
+          .from(content)
+          .set({
+            margin: 0.5,
+            filename: "cover_letter.pdf",
+            html2canvas: { scale: 2 },
+            jsPDF: { format: "a4", orientation: "portrait" },
+          })
+          .save();
+      }
+    } catch (err) {
+      alert("Something went wrong while generating PDF.");
+      console.error(err);
     }
   };
 
@@ -142,10 +155,10 @@ const CoverLetterEditor = () => {
           <h2 className="text-lg font-semibold mb-4">Live Preview</h2>
           <div
             id="preview-content"
-            className="bg-gray-50 border p-4 rounded space-y-4"
+            className="bg-gray-50 border p-4 rounded space-y-4 max-h-[400px] w-[600px] overflow-y whitespace-pre-wrap font-serif leading-relaxed"
           >
             <p>Dear {form.recipientName || "Hiring Manager"},</p>
-            <div className="prose prose-sm max-w-none whitespace-pre-wrap">
+            <div >
               {form.body || "Start writing your cover letter..."}
             </div>
             <p>Sincerely,</p>

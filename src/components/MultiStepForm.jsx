@@ -1,49 +1,56 @@
-import react, { useState } from "react";
+import react, { useRef, useState } from "react";
 import StepEducation from "./StepEducation";
 import StepExperience from "./StepExperience";
 import StepPersonal from "./StepPersonal";
-import StepReview from "./StepReview";
+import StepPreview from "./StepReview";
 import StepSkills from "./StepSkills";
 import StepSummary from "./StepSummary";
+import StepTemplateSelection  from "./StepTemplateSelection";
 import { useResume } from "../context/ResumeContext";
 
 const steps = [
+  StepTemplateSelection,
   StepPersonal,
   StepExperience,
   StepEducation,
   StepSkills,
   StepSummary,
-  StepReview,
+  StepPreview,
 ];
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const {formData, setFormData} = useResume();
+  const {formData, updateFormData} = useResume();
+
+    const Step = steps[currentStep];
   
+   const previewRef = useRef(null);
+    const handleSubmit = () => {
+    console.log("Final Resume Data:", formData);
+    alert("Resume generation initiated!"); // User feedback
 
-  const Step = steps[currentStep];
-  const updateFormData = (section, data) => {
-    setFormData((prev) => ({
-      ...prev,
-      [section]: data,
-    }));
+    // If we are on the preview step, trigger the download
+    if (currentStep === steps.length - 1 && previewRef.current) {
+      previewRef.current.triggerDownload(); // Call a method on StepPreview
+    } else {
+        // This case should ideally not be hit if the button is only on the last step
+        console.warn("Submit pressed on a non-preview step or previewRef not set.");
+    }
   };
 
-  const handleSubmit = () => {
-    localStorage.setItem("resumeData", JSON.stringify(formData));
-    alert("Resume data saved!");
-  };
+
+  
 
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <div className="mb-6">
-        <div className="text-sm text-gray-500">
+      <div className="mb-6 py-[5px] px-2 bg-blue-950">
+        <div className="text-sm text-gray-200">
           Step {currentStep + 1} of {steps.length}
         </div>
         <div className="h-2 bg-gray-200 rounded">
           <div
-            className="h-full bg-blue-500 rounded"
+            className="h-full bg-amber-400 rounded"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
           />
         </div>
