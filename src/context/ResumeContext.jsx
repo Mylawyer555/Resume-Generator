@@ -7,24 +7,24 @@ const ResumeContext = createContext();
 const initialFormData = {
   selectedTemplate: "classic", // Default template
   personal: {
-    firstname: "",
-    lastname: "",
-    email: "",
-    phoneNumber: "",
-    district: "",
-    postalCode: "",
-    country: "",
+    firstname: '',
+    lastname: '',
+    district: '',
+    postalCode: '',
+    country: '',
+    phoneNumber: '',
+    email: ''
   },
   summary: "",
-  experience: [
+  experiences: [
     {
-      jobTitle: "",
-      employer: "",
-      city: "",
-      country: "",
-      startDate: "",
-      endDate: "",
-      responsibilities: "", // Ensure this is initialized
+        jobTitle: "",
+        responsibilites: "",
+        employer: "",
+        city: "",
+        country: "",
+        startDate: "",
+        endDate: "", 
     },
   ],
   education: [
@@ -44,13 +44,23 @@ const initialFormData = {
 
 export const ResumeProvider = ({ children }) => {
   // set the state of the form data
-  const [formData, setFormData] = useState(initialFormData)
+  const [formData, setFormData] = useState(() => {
+    try {
+        const storedData = localStorage.getItem("resumeData");
+        return storedData ? JSON.parse(storedData) : initialFormData;
+    } catch (error) {
+        console.error("Failed to parse resume data from localStorage:", error);
+        toast.error("Failed to load resume data from localStorage. Please start over.");
+        return initialFormData; // Return initial form data if parsing fails
+    }
+  })
     
 
   //auto save on every change
   useEffect(() => {
     try {
         localStorage.setItem("resumeData", JSON.stringify(formData));
+         console.log("localStorage updated with formData:", formData);
     } catch (error) {
         toast.error("Failed to save resume data to localStorage:", error)
     }
@@ -64,20 +74,19 @@ export const ResumeProvider = ({ children }) => {
   };
 
   //clear form data
-  const clearFormData = () => {
+  const resetFormData = () => {
+    setFormData(initialFormData);
+   try {
     localStorage.removeItem("resumeData");
-    setFormData({
-      personal: {},
-      education: [],
-      experience: [],
-      skills: [],
-      summary: "",
-      selectedTemplate: null,
-    });
+    console.log("Form data cleared and localStorage updated.");
+    
+   } catch (error) {
+    console.error("Failed to clear localStorage:", error);
+   }
   };
 
   return (
-    <ResumeContext.Provider value={{ formData, setFormData, updateFormData, clearFormData }}>
+    <ResumeContext.Provider value={{ formData, setFormData, updateFormData, resetFormData }}>
       {children}
     </ResumeContext.Provider>
   );

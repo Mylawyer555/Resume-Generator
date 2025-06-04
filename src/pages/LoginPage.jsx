@@ -48,7 +48,7 @@ const LoginPage = () => {
             reset();
             toast.success("Login successful!")
             setIsLoading(false);
-            navigate("/templates")
+            navigate("/")
         }, 2000)
      }else {
         setIsLoading(false)

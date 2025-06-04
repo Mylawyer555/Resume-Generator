@@ -5,13 +5,13 @@ export const Templates = [
     {
         id: "classic",
         name: "Classic Template",
-        image: "/template 2.png",
+        image: "/shot1.png",
         component: ClassicTemplate,
     },
     {
         id: "modern",
         name: "Modern Template",
-        image: "/resume2.png",
+        image: "/shot 2.png",
         component: ModernTemplate
     }
 ]

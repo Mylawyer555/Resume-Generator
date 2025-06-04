@@ -1,14 +1,21 @@
 import React from "react";
-import Navbar from "../components/Navbar"; // Assuming your Navbar component is solid
-import { useNavigate } from "react-router-dom";
-import { FileText, FileCheck, BadgeCheck } from "lucide-react"; // Great choice for icons!
+import Navbar from "../components/Navbar"; 
+import { redirect, useNavigate } from "react-router-dom";
+import { FileText, FileCheck, BadgeCheck } from "lucide-react"; 
+import { useAuth } from "../context/AuthContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth(); // Assuming you have an auth context to check if user is logged in
 
-  // Renamed for clarity and consistency with actions
-  const handleStartBuilding = () => navigate("/build");
-  const handleViewTemplates = () => navigate("/templates");
+  const handleStartBuilding = () => {
+    if (user) {
+      navigate("/build"); // Redirect to resume builder if user is logged in
+    } else {
+      navigate("/login"); // Redirect to login if not logged in
+    }
+  }
+ 
 
   return (
     <div className="bg-white font-sans text-gray-800 antialiased"> {/* Added antialiased for smoother fonts */}
@@ -34,7 +41,7 @@ const LandingPage = () => {
               Start Building My Resume
             </button>
             <button
-              onClick={handleViewTemplates}
+              onClick={handleStartBuilding}
               className="border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition transform hover:-translate-y-1"
             >
               Explore Professional Templates

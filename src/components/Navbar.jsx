@@ -23,7 +23,9 @@ const Navbar = () => {
     <nav className="bg-gray-900 text-white">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold">iCRAFT</div>
+        <div className="text-2xl font-bold">
+          <Link className="cursor-pointer" to='/'>iCRAFT</Link>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">

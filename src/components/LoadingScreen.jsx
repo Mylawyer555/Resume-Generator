@@ -58,9 +58,9 @@ const LoadingScreen = () => {
       </p>
 
       {/* Progress Bar Container */}
-      <div className="w-64 bg-blue-500 rounded-full h-3">
+      <div className="w-64 bg-blue-100 rounded-full h-2">
         <div
-          className="bg-amber-400 h-3 rounded-full transition-all duration-300 ease-out"
+          className="bg-amber-400 h-2 rounded-full transition-all duration-300 ease-out"
           style={{ width: `${progress}%` }}
         ></div>
       </div>

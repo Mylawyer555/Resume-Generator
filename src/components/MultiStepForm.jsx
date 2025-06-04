@@ -7,6 +7,7 @@ import StepSkills from "./StepSkills";
 import StepSummary from "./StepSummary";
 import StepTemplateSelection  from "./StepTemplateSelection";
 import { useResume } from "../context/ResumeContext";
+import { motion } from "framer-motion";
 
 const steps = [
   StepTemplateSelection,
@@ -43,12 +44,14 @@ const MultiStepForm = () => {
 
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="mb-6 py-[5px] px-2 bg-blue-950">
+    <div 
+    
+    className="max-w-7xl mx-auto p-4">
+      <div className="mb-6 py-[5px] px-2 bg-blue-950 ">
         <div className="text-sm text-gray-200">
           Step {currentStep + 1} of {steps.length}
         </div>
-        <div className="h-2 bg-gray-200 rounded">
+        <div className="h-2 bg-blue-100 rounded">
           <div
             className="h-full bg-amber-400 rounded"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}

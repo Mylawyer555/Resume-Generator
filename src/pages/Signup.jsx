@@ -2,50 +2,63 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
-    register, handleSubmit, reset,formState:{isValid, errors}
+    register,
+    handleSubmit,
+    reset,
+    formState: { isValid, errors },
   } = useForm({
-   mode:"onChange",
+    mode: "onChange",
   });
 
-  const onSubmit = (newUser) => {
+  const onSubmit = async (newUser) => { // Made onSubmit async for potential future API calls
     try {
-        setIsLoading(true);
-        
-        // getting existing user from local storage
-        const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+      setIsLoading(true);
 
-        // check if email exist
-        const emailExist = existingUsers.some((user) => user.email === newUser.email);
-        if (emailExist){
-            toast.error("Email already registered, Please login");
-            setIsLoading(false)
-            return;
-        }
+      // Getting existing user from local storage
+      const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-        // add new user to the list and save to localstorage
-        const updateUsers = [...existingUsers, newUser ];
-        localStorage.setItem("users", JSON.stringify(updateUsers));
-
-        // notify success
-        toast.success("Account created successfully");
-        setTimeout(() => {
-            reset();
-            navigate("/login");
-        }, 2000)
-    } catch (error) {
-        console.log(error);
-        toast.error("Failed to register user")
-    }finally{
+      // Check if email exists
+      const emailExist = existingUsers.some(
+        (user) => user.email === newUser.email
+      );
+      if (emailExist) {
+        toast.error("Email already registered, Please login");
         setIsLoading(false);
+        return;
+      }
+
+      // Add new user to the list and save to localstorage
+      const updateUsers = [...existingUsers, newUser];
+      localStorage.setItem("users", JSON.stringify(updateUsers));
+
+      // Notify success
+      toast.success("Account created successfully");
+      setTimeout(() => {
+        reset();
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      console.error("Registration error:", error); // Use console.error for errors
+      toast.error("Failed to register user");
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -61,11 +74,13 @@ const SignupPage = () => {
             </label>
             <input
               id="name"
-              type="text"          
-              {...register("name", {required:"Fullname is required"})}
+              type="text"
+              {...register("name", { required: "Fullname is required" })}
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
             />
-            {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name.message}</p>
+            )}
           </div>
 
           <div>
@@ -75,34 +90,76 @@ const SignupPage = () => {
             <input
               id="email"
               type="email"
-              {...register("email", {required:"email is required", pattern:{value: /^\S+@\S+$/i, message:"invalid email address"}})}
+              {...register("email", {
+                required: "Email is required",
+                pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
+              })}
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
 
+          {/* Password field with toggle */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
-              id="password"
-              type="password"
-              {...register("password",{required:"Password is required", 
-                minLength:{
-                    value:5,
-                    message:"password must be atleast 5 characters"
-                }})}
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
-            />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            <div className="relative mt-1"> {/* Add relative positioning here */}
+              <input
+                id="password"
+                // Dynamically set type based on showPassword state
+                type={showPassword ? "text" : "password"}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 5,
+                    message: "Password must be at least 5 characters",
+                  },
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 pr-10" // Add pr-10 for icon space
+              />
+              {/* Eye Icon */}
+              <span
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                {/* Replace with actual eye icons if you have an icon library */}
+                {showPassword ? (
+                  // <svg
+                  //   xmlns="http://www.w3.org/2000/svg"
+                  //   fill="none"
+                  //   viewBox="0 0 24 24"
+                  //   strokeWidth={1.5}
+                  //   stroke="currentColor"
+                  //   className="w-5 h-5 text-gray-500"
+                  // >
+                  //   <path
+                  //     strokeLinecap="round"
+                  //     strokeLinejoin="round"
+                  //     d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.173.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.173Z"
+                  //   />
+                  //   <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  // </svg>
+                  <FiEye className="w-5 h-5 text-gray-500" />
+
+                ) : (
+                  <FiEyeOff className="w-5 h-5 text-gray-500" />
+                )}
+              </span>
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
 
           <button
             type="submit"
             className={`w-full bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition font-medium disabled:bg-yellow-200 disabled:cursor-not-allowed`}
+            disabled={isLoading} // Disable button while loading
           >
-            {isLoading ? "Registering...": "Register"}
+            {isLoading ? "Registering..." : "Register"}
           </button>
         </form>
 
