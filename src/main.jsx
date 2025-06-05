@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import ClassicTemplate from "./components/tem/classic";
 import ModernTemplate from "./components/tem/Modern";
 import FAQPage from "./pages/Faq";
+import ProtectedRoutes from "./routes/ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +23,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/build",
-    element: <ResumePage />,
+    element: 
+    <ProtectedRoutes>
+      <ResumePage />
+    </ProtectedRoutes>,
   },
+  {
+    path:"/cover-letter",
+    element: 
+    <ProtectedRoutes>
+      <CoverLetterEditor/>
+    </ProtectedRoutes>
+  },
+
+
   {
     path: "/signup",
     element: <SignupPage />,
@@ -32,22 +45,12 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
   },
-  {
-    path: "/cover-letter",
-    element: <CoverLetterEditor />,
-  },
+ 
   {
     path: "/faq",
     element: <FAQPage />,
   },
-  {
-    path: "/classic",
-    element: <ClassicTemplate />,
-  },
-  {
-    path: "/modern",
-    element: <ModernTemplate />,
-  }
+  
 ]);
 
 const root = createRoot(document.getElementById("root"));
