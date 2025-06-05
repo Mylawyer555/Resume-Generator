@@ -1,4 +1,4 @@
-import react, { useRef, useState } from "react";
+import react, { useEffect, useRef, useState  } from "react";
 import StepEducation from "./StepEducation";
 import StepExperience from "./StepExperience";
 import StepPersonal from "./StepPersonal";
@@ -22,6 +22,10 @@ const steps = [
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const {formData, updateFormData} = useResume();
+  const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
+
+
+  
 
     const Step = steps[currentStep];
   
@@ -39,6 +43,19 @@ const MultiStepForm = () => {
     }
   };
 
+  // reset valid state when the step changes
+  useEffect(() => {
+    setIsCurrentStepValid(false);
+
+  },[currentStep]);
+
+  const handleNext = () => {
+    if (isCurrentStepValid) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      alert("Please complete the current step before proceeding.");
+    }
+  };
 
   
 
@@ -59,7 +76,20 @@ const MultiStepForm = () => {
         </div>
       </div>
 
-      <Step formData={formData} updateFormData={updateFormData} />
+      {currentStep === steps.length - 1 ? (
+        <Step
+          formData={formData}
+          updateFormData={updateFormData}
+          ref={previewRef} // Pass the ref to StepPreview for download functionality
+          stepIsValid={setIsCurrentStepValid} // Pass the validation setter
+        />
+      ) : (
+        <Step
+          formData={formData}
+          updateFormData={updateFormData}
+          stepIsValid={setIsCurrentStepValid} // Pass the validation setter
+        />
+      )}
 
 
       <div className="flex justify-between mt-6">
@@ -81,7 +111,10 @@ const MultiStepForm = () => {
         ) : (
             <button 
             onClick={handleSubmit}
-            className="btn-primary"
+            className='primary-btn'
+            disabled={!isCurrentStepValid} // Disable if current step is not valid
+            
+           
             >
                 Submit
             </button>

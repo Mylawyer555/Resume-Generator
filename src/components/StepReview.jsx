@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { useResume } from '../context/ResumeContext';
 import { Templates } from "../templates/Template";
+import { toast } from "react-toastify";
 
 // Wrap the component with forwardRef
 const StepPreview = forwardRef(({ updateFormData, formData }, ref) => { // Accept updateFormData, formData props
@@ -42,7 +43,7 @@ const StepPreview = forwardRef(({ updateFormData, formData }, ref) => { // Accep
     }).catch(error => {
         console.error("PDF generation failed:", error);
         setLoading(false);
-        alert("Failed to generate PDF. Please try again.");
+        toast.error("Failed to generate PDF. Please try again.");
     });
   };
 
