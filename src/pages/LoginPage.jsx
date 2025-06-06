@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuth} from "../context/AuthContext"
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LoginPage = () => {
     const { user, login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
  
   const {
@@ -23,13 +26,6 @@ const LoginPage = () => {
     }
   });
 
-//   useEffect(() => {
-//     if(user){
-//        navigate('/bui'); 
-//     }else{
-//         navigate('/login');
-//     }
-//   },[user, navigate]);
 
 
   const onSubmit = (loginData) => {
@@ -61,6 +57,11 @@ const LoginPage = () => {
    }
   }
 
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md p-8 bg-white shadow-xl rounded-xl">
@@ -87,28 +88,46 @@ const LoginPage = () => {
                 },
               })}
               required
+              placeholder="Enter your email"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
             />
             {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
           </div>
 
-          <div>
+          <div className="relative">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
               Password
             </label>
+            <div className="relative ">
             <input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
                 {...register("password", {required:"Password is required", minLength:{
                     value:5,
                     message:"Password must be at least 5 characters"
                 }})}
               required
+              placeholder="Enter your password"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500"
             />
+            <span
+              className=" absolute inset-y-0 right-0 top-1/5 flex items-center pr-3 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <FiEye className="text-gray-500" />
+              ) : (
+                <FiEyeOff className="text-gray-500" />
+              )}
+            </span>
+            </div>
+
+
+
+
             {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
 
           </div>

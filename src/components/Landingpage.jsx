@@ -67,7 +67,7 @@ const LandingPage = () => {
          
           src="/company.png" // Ensure this path is correct
           alt="Logos of companies whose professionals trust our service"
-          className="mx-auto w-4/5 md:w-3/5 lg:w-2/5 max-w-2xl opacity-90  border filter grayscale hover:filter-none transition-all duration-300"
+          className="mx-auto w-4/5 md:w-3/5 lg:w-2/5 max-w-2xl opacity-90 filter grayscale hover:filter-none transition-all duration-300"
         />
       </section>
 
