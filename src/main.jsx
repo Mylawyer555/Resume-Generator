@@ -11,8 +11,6 @@ import CoverLetterEditor from "./pages/CoverletterEditor";
 import { AuthProvider } from "./context/AuthContext";
 import { ResumeProvider } from "./context/ResumeContext";
 import { ToastContainer } from "react-toastify";
-import ClassicTemplate from "./components/tem/classic";
-import ModernTemplate from "./components/tem/Modern";
 import FAQPage from "./pages/Faq";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 
